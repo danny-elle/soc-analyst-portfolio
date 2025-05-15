@@ -8,7 +8,7 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 | Title | Description | Link |
 |-------|-------------|------|
-| 🧪 Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
+| 🧪 Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](https://github.com/danny-elle/soc-analyst-portfolio/blob/main/writeups/wireshark-traffic-analysis.md) |
 
 ---
 
