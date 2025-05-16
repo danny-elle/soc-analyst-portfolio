@@ -16,7 +16,7 @@ Perform network traffic analysis using Wireshark to investigate various network 
 
 **File Used**": `Desktop/exercise-pcaps/nmap/Exercise.pcapng`
 
-- **What is the total number of the "TCP Connect" scans?**  
+- **What is the total number of the "TCP Connect" scans?**<br>  
   `1000`  
   → Filtered using `tcp.flags.syn == 1 and tcp.flags.ack == 0 and tcp.window_size <= 1024` and checked Displayed number.  
 
