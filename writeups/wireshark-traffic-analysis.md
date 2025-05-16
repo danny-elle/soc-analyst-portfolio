@@ -12,7 +12,49 @@ Perform network traffic analysis using Wireshark to investigate various network 
 - **KeysLogFile.txt (for TLS decryption)**
 
 ---
+## Nmap Scans
 
+**File Used**": `Desktop/exercise-pcaps/nmap/Exercise.pcapng`
+
+- **What is the total number of the "TCP Connect" scans?
+  `1000`
+  → Filtered using `tcp.flags.syn == 1 and tcp.flags.ack == 0 and tcp.window_size <= 1024` and checked Displayed number.
+
+- **Which scan type is used to scan the TCP port 80?**
+    `TCP Connect`
+
+- **How many "UDP close port" messages are there?**
+  `1083`
+  → Filtered using `icmp.type==3 and icmp.code==3` and checking Displayed number.
+
+- **Which UDP port in the 55-70 port range is open?**
+  `68`
+  → Filtered using `udp.dstport >= 55 and udp.dstport <= 70`
+
+## ARP Poisoning & Man In The Middle!
+
+**File Used**: `Desktop/exercise-pcaps/arp/Exercise.pcapng`
+
+- **What is the number of ARP requests crafted by the attacker?**
+  `284`
+  → Filtered using `arp.dst.hw_mac == 00:00:00:00:00:00 and (arp.opcode == 1 and arp.src.hw_mac == 00:0c:29:e2:18:b4)` checking Displayed packets.
+  
+- **What is the number of HTTP packets received by the attacker?**
+  `90`
+  → Filtered using `http and eth.dst == 00:0c:29:e2:18:b4` checked Displayed packets.
+
+- **What is the number of sniffed username&password entries?**
+  `6`
+  → Filtered using `urlencoded-form.key == "pass"` check Displayed number.
+
+- **What is the password of the "Client986"?**
+  `clientnothere!`
+  → Filtered using `http contains "client986"`
+
+- **What is the comment provided by the "Client354"?**
+  `Nice work!`
+  → Filter using `http contains "client354"` under HTML Form URL Encoded section in details look for "comment".
+  
 ## DHCP, NetBIOS, and Kerberos Analysis
 
 **File Used**: `Desktop/exercise-pcaps/dhcp-netbios-kerberos/dhcp-netbios.pcap`
@@ -155,6 +197,8 @@ Perform network traffic analysis using Wireshark to investigate various network 
 
 ## Lessons Learned
 
+- **Nmap Scans** learned to filter in WireShark for commands nmap -sT (3-way handshake) and nmap -sU (UDP scan).
+- **ARP Poisoning & MITM** identified ARP spoofing activity, analyzed intercepted HTTP traffic to attacker, and extracted credentials and user-submitted data from HTTP requests.
 - **Wireshark filters** are powerful when paired with an understanding of protocol structures.
 - **Attention to packet details** (like opcodes, headers, payloads) is critical for accurate answers.
 - **Decryption setup** using key log files opens deeper inspection layers.
