@@ -8,7 +8,9 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 | Title | Description | Link |
 |-------|-------------|------|
-| 🧪 Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](https://github.com/danny-elle/soc-analyst-portfolio/blob/main/writeups/wireshark-traffic-analysis.md) |
+| 🧪 Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
+| 🔐 Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   | [View](./anti-reverse-engineering.md) |
+
 
 ---
 
@@ -19,6 +21,11 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 - CyberChef decoding and credential hunting
 - Identifying Nmap scans, ARP spoofing, DNS tunneling, etc.
 - Real-world SOC workflows
+- Reverse engineering basics using tools like Detect It Easy, IDA Pro, x64dbg, Task Manager, and pestudio
+- Detecting and analyzing anti-debugging and VM-detection techniques
+- Windows API behavior analysis
+- Using base64 decoding, memory inspection, and entropy analysis for malware unpacking
+
 
 ---
 
