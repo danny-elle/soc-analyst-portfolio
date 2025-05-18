@@ -1,20 +1,20 @@
-# 🛡️ SOC Analyst Portfolio
+#  SOC Analyst Portfolio
 
 Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue team exercises, CTF write-ups, and packet analysis work I’ve completed to build my career as a Tier 1 SOC Analyst.
 
 ---
 
-## 📁 Write-Ups
+##  Write-Ups
 
 | Title | Description | Link |
 |-------|-------------|------|
-| 🧪 Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
-| 🔐 Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/anti-reverse-engineering.md) |
+|  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
+|  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/anti-reverse-engineering.md) |
 
 
 ---
 
-## 🧠 Skills Demonstrated
+##  Skills Demonstrated
 
 - Packet capture and analysis (Wireshark)
 - Threat detection and protocol dissection
