@@ -115,49 +115,40 @@ This write-up covers common anti-debugging, anti-VM, and anti-reverse engineerin
 
 ## Lessons Learned
 
-### Anti-Debugging Techniques
+## Anti-Debugging Techniques
 
+ - **SuspendThread** can halt threads involved in reverse engineering. It’s useful for malware to freeze analyzers like x64dbg.  
+ - **Patching with NOPs** is an essential technique to bypass such checks.  
 
-     - **SuspendThread** can halt threads involved in reverse engineering. It’s useful for malware to freeze analyzers like x64dbg.  
-     - **Patching with NOPs** is an essential technique to bypass such checks.  
+## VM Detection Techniques
 
-### VM Detection Techniques
+  - Malware often checks for VM tools like `vmtoolsd.exe` or `vboxservice.exe` to determine if it’s running in a sandbox.  
+  - It may scan the registry path `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall` to detect installed analysis tools.  
+  - MAC addresses like `00:50:56`, `00:0C:29`, `00:1C:14` are often associated with VMware.  
+  - Malware may inspect **Organizationally Unique Identifiers (OUIs)** in MAC addresses to identify virtual environments.  
+  - Malware uses **WMI queries** like `SELECT * FROM MSAcpi_ThermalZoneTemperature`.  
+  - A "Not Supported" value can reveal a virtual environment.
+    
+## Debugger Manipulation
 
+  - Tools like x64dbg allow real-time memory editing, register modification (e.g., `EIP`), and patching to bypass checks or force execution paths.
+    
+## Common Obfuscation Techniques
 
-     - Malware often checks for VM tools like `vmtoolsd.exe` or `vboxservice.exe` to determine if it’s running in a sandbox.  
-     - It may scan the registry path `SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall` to detect installed analysis tools.  
-     - MAC addresses like `00:50:56`, `00:0C:29`, `00:1C:14` are often associated with VMware.  
-     - Malware may inspect **Organizationally Unique Identifiers (OUIs)** in MAC addresses to identify virtual environments.  
-     - Malware uses **WMI queries** like `SELECT * FROM MSAcpi_ThermalZoneTemperature`.  
-     - A "Not Supported" value can reveal a virtual environment.  
-     
+  - **Encoding** (Base64, XOR).  
+  - **Encryption** (symmetric or asymmetric key exchange with C2 servers).  
+  - **Code obfuscation** (restructured functions, renamed symbols, scattered logic).
 
-### Debugger Manipulation
-
-
-     - Tools like x64dbg allow real-time memory editing, register modification (e.g., `EIP`), and patching to bypass checks or force execution paths.  
-
-
-### Common Obfuscation Techniques
-
-
-     - **Encoding** (Base64, XOR).  
-     - **Encryption** (symmetric or asymmetric key exchange with C2 servers).  
-     - **Code obfuscation** (restructured functions, renamed symbols, scattered logic).  
-
-
-### Packers
+## Packers
    
-
-     - Packers like **UPX** compress executables and hide real instructions until runtime.  
-     - The best way to analyze packed malware is **runtime unpacking**.  
-
-
-
+  - Packers like **UPX** compress executables and hide real instructions until runtime.  
+  - The best way to analyze packed malware is **runtime unpacking**.
+    
 ## Prevention Tips
 
-     - **Hide analysis tools** by modifying registry entries and uninstall keys.  
-     - **Change MAC addresses** to non-VM OUIs.  
-     - **Patch WMI queries** or NOP instructions that expose VM or debugger presence.  
-     - **Simulate a real environment** (e.g., run a printer service or enable audio) to trick malware into execution.  
+  - **Hide analysis tools** by modifying registry entries and uninstall keys.  
+  - **Change MAC addresses** to non-VM OUIs.  
+  - **Patch WMI queries** or NOP instructions that expose VM or debugger presence.  
+  - **Simulate a real environment** (e.g., run a printer service or enable audio) to trick malware into execution.
 
+    
