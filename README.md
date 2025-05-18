@@ -29,7 +29,7 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 ---
 
-## 🚀 Future Additions
+##  Future Additions
 
 - HTB Blue Team labs
 - Splunk detection rules
