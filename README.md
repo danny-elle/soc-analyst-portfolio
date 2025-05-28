@@ -10,13 +10,14 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 |-------|-------------|------|
 |  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
 |  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/anti-reverse-engineering.md) |
+|  Python Network Sniffer   | A Scapy network packet sniffer that displays source/destination IPs, TCP ports, and TCP flags. Built to simulate real-time traffic inspection in SOC setting | [View](network-sniffer/simple_sniffer.py)  |
 
 
 ---
 
 ##  Skills Demonstrated
 
-- Packet capture and analysis (Wireshark)
+- Packet capture and analysis (Wireshark, Scapy)
 - Threat detection and protocol dissection
 - CyberChef decoding and credential hunting
 - Identifying Nmap scans, ARP spoofing, DNS tunneling, etc.
@@ -35,3 +36,4 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 - Splunk detection rules
 - CTFs (TryHackMe)
 - Malware analysis and reverse engineering
+- Python scripts for packet filtering, exporting logs, and alerting.
