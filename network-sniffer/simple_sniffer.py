@@ -6,10 +6,11 @@
 from datetime import datetime
 # from scapy.all import get_if_list
 # print(get_if_list())
-from scapy.all import sniff
-from  scapy.all import  *
+from scapy.all import sniff, IP, TCP, UDP, ICMP, ARP
+
 
 icmp_message = {
+
         (0, 0): "Echo Reply",
         (3, 0): "Destination network unreachable",
         (3, 1): "Desintation host unreachable",
@@ -34,27 +35,43 @@ icmp_message = {
         (5, 3): "Redirect Datagram for the ToS & host",
         (6, 0): "Alternate Host Address",
         (8, 0): "Echo request"
+
 }
 
+# TO-DOs:
+# TCP Flags
+# Flag suspicous ports
+# Save to log
+# Filter by port or protocol
+# Add HTTP
+# Add DNS
 
 def packet_processor(pkts):
     try:
         for pkt in pkts:
-            if pkt.haslayer("IP"):
-                src_ip = pkts[IP].src
-                dst_ip = pkts[IP].dst
+            if pkt.haslayer(IP):
+                src_ip = pkt[IP].src
+                dst_ip = pkt[IP].dst
                 timestamp = datetime.fromtimestamp(pkt.time).strftime('%Y-%m-%d %H:%M:%S')
-                if pkt.haslayer("TCP"):
-                    src_port = pkts[TCP].sport
-                    dst_port = pkts[TCP].dport
-                    print(f"TCP: {timestamp} {pkts[TCP].flags} {src_ip} {src_port} -> {dst_ip} {dst_port}")
-                elif pkt.haslayer("UDP"):
-                      print(f"UDP: {timestamp} {pkts[IP].src} {pkts[UDP].sport} -> {pkts[IP].dst} {pkts[UDP].dport}")
-                elif pkt.haslayer("ICMP"):
-                    meaning = icmp_message.get((pkts[ICMP].type, pkts[ICMP].code), "Unknown ICMP Message")
-                    print(f"ICMP: {timestamp} {pkts[IP].src} -> {pkts[IP].dst} Type: {pkts[ICMP].type}, Code: {pkts[ICMP].code}, Message: {meaning}")
+                
+                if pkt.haslayer(TCP):
+                    src_port = pkt[TCP].sport
+                    dst_port = pkt[TCP].dport
+                    flags = pkt[TCP].flags
+                    print(f"[TCP] {timestamp} {src_ip}:{src_port} -> {dst_ip}:{dst_port} | Flags: {flags}")
+                
+                elif pkt.haslayer(UDP):
+                    print(f"[UDP] {timestamp} {src_ip}:{pkt[UDP].sport} -> {dst_ip}:{pkt[UDP].dport}")
+                
+                elif pkt.haslayer(ICMP):
+                    icmp_type = pkt[ICMP].type
+                    icmp_code = pkt[ICMP].code
+                    meaning = icmp_message.get((pkt[ICMP].type, pkt[ICMP].code), "Unknown ICMP Message")
+                    print(f"[ICMP] {timestamp} {src_ip} -> {dst_ip} | Type: {icmp_type}, Code: {icmp_code}, Message: {meaning}")
+
                 elif pkt.haslayer("ARP"):
-                      print(f"ARP: {timestamp} {pkts[ARP].psrc} -> {pkts[ARP].pdst}")
+                      print(f"ARP: {timestamp} {pkt[ARP].psrc} -> {pkt[ARP].pdst}")
+
     except Exception as e:
         print(f"Packet error while parsing: {e}")
 
