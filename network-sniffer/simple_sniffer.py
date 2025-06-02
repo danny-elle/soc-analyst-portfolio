@@ -6,8 +6,8 @@
 from datetime import datetime
 # from scapy.all import get_if_list
 # print(get_if_list())
-from scapy.all import sniff, IP, TCP, UDP, ICMP, ARP
-
+from scapy.all import sniff, IP, TCP, UDP, ICMP, ARP, Raw
+import re
 
 icmp_message = {
 
@@ -43,8 +43,8 @@ icmp_message = {
 # Flag suspicous ports
 # Save to log
 # Filter by port or protocol
-# Add HTTP
 # Add DNS
+# Add suspicious payload sizes for HTTP traffic
 
 def packet_processor(pkts):
     try:
@@ -54,19 +54,39 @@ def packet_processor(pkts):
                 dst_ip = pkt[IP].dst
                 timestamp = datetime.fromtimestamp(pkt.time).strftime('%Y-%m-%d %H:%M:%S')
                 
-                if pkt.haslayer(TCP):
+                if pkt.haslayer(TCP) and pkt.haslayer(Raw):
                     src_port = pkt[TCP].sport
                     dst_port = pkt[TCP].dport
                     flags = pkt[TCP].flags
+                    payload = pkt[Raw].load.decode(errors="ignore")
                     print(f"[TCP] {timestamp} {src_ip}:{src_port} -> {dst_ip}:{dst_port} | Flags: {flags}")
-                
+                    
+                    # Formatting output using bold for credentials found
+                    BOLD = "\033[1m"
+                    RESET = "\033[0m"
+
+                    # HTTP Method extraction
+                    if payload.startswith(("GET", "POST", "PUT", "DELETE")):
+                        method = payload.splitlines()[0]
+                        print(f"\n[HTTP Reuest]: {method}")
+
+                    if "username=" in payload or "password=" in payload:
+                        print(f"{BOLD}Credentials found:{RESET}\n")
+                        # Splitting based on POST data (&) and headers (newline)
+                        params = re.split(r"[&\n]", payload)
+                        for param in params:
+                            if "username=" in param or "password=" in param:
+                                key_val = param.strip()
+                                print(f"   {BOLD}{key_val}{RESET}")
+                    print("\n")
+
                 elif pkt.haslayer(UDP):
                     print(f"[UDP] {timestamp} {src_ip}:{pkt[UDP].sport} -> {dst_ip}:{pkt[UDP].dport}")
                 
                 elif pkt.haslayer(ICMP):
                     icmp_type = pkt[ICMP].type
                     icmp_code = pkt[ICMP].code
-                    meaning = icmp_message.get((pkt[ICMP].type, pkt[ICMP].code), "Unknown ICMP Message")
+                    meaning = icmp_message.get((icmp_type, icmp_code), "Unknown ICMP Message")
                     print(f"[ICMP] {timestamp} {src_ip} -> {dst_ip} | Type: {icmp_type}, Code: {icmp_code}, Message: {meaning}")
 
                 elif pkt.haslayer("ARP"):
@@ -77,10 +97,13 @@ def packet_processor(pkts):
 
 
 # Run ping 8.8.8.8 or ping google.com, script runs in sudo
-# sniff(filter="ip", count=10, prn=packet_layers, iface="eth0", store=True)
+#sniff(filter="ip", count=10, prn=packet_processor, iface="eth0", store=True)
 
 # Run ping telnet google.com 80, ctrl+] quit
-#sniff(filter="tcp", prn=packet_layers)
+#sniff(filter="tcp", prn=packet_processor)
 
 
-sniff(prn=packet_processor, store=0)
+# sniff(prn=packet_processor, store=0)
+
+# Testing HTTP capture
+sniff(filter= "tcp port 8000", iface= "lo", prn=packet_processor, store=0)
