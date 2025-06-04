@@ -2,7 +2,7 @@
 import datetime
 
 '''
-ioc_ip.py
+ioc_ips.py
 
 This Python script analyzes a lit of simulated alert data to identify IP addresses associate with threats.
 For each IP flagged as malicious, it prints the details and logs them to a local file for further analysis.
@@ -21,7 +21,7 @@ alerts = [
         {"ip": "8.8.8.8", "threat": True, "category": "DDoS", "severity": "critical"}
         ]
 
-def detect_threat_ips(alertsi, logfile="threat_ips.log"):
+def detect_threat_ips(alerts, logfile="threat_ips.log"):
 
     count = 0
 
