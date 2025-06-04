@@ -1,6 +1,6 @@
 #  SOC Analyst Portfolio
 
-Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue team exercises, CTF write-ups, and packet analysis work I’ve completed to build my career as a Tier 1 SOC Analyst.
+Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue team exercises, write-ups, and python blue team based scripts I’ve completed to build my career as a Tier 1 SOC Analyst.
 
 ---
 
@@ -10,6 +10,11 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 |-------|-------------|------|
 |  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
 |  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/anti-reverse-engineering.md) |
+
+## SOC Scripts
+
+| Title | Description | Link |
+|-------|-------------|------|
 |  Python Network Sniffer   | A Scapy network packet sniffer that displays source/destination IPs, TCP ports, and TCP flags. Built to simulate real-time traffic inspection in SOC setting | [View](network-sniffer/simple_sniffer.py)  |
 
 
