@@ -1,0 +1,6 @@
+
+Scanning started at 2025-06-04 13:56:51.587905
+IP, Category, Severity
+------------------------------
+192.168.1.10, Brute Force, high
+8.8.8.8, DDoS, critical
