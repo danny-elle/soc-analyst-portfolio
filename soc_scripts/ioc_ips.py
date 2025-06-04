@@ -21,7 +21,7 @@ alerts = [
         {"ip": "8.8.8.8", "threat": True, "category": "DDoS", "severity": "critical"}
         ]
 
-def detect_threat_ips(alertsi, logfile="threat_ips.log"):
+def detect_threat_ips(alerts, logfile="threat_ips.log"):
 
     count = 0
 
