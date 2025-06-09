@@ -25,16 +25,20 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 ##  Skills Demonstrated
 
-- Packet capture and analysis (Wireshark, Scapy)
-- Threat detection and protocol dissection
-- CyberChef decoding and credential hunting
-- Identifying Nmap scans, ARP spoofing, DNS tunneling, etc.
-- Real-world SOC workflows
+- Packet capture and protocol analysis using Wireshark and Python (Scapy)
+- Real-time network traffic inspection (TCP, UDP, IP filtering with Python)
+- Threat detection and IOC triage automation through Python scripting
+- Suspicious port scanning and alerting logic for early threat identification
+- Time-based alert filtering to identify recent and high-priority threats
+- IP-based IOC correlation and threat logging for escalation workflows
+- Custom tool creation to simulate and streamline SOC analyst tasks
+- Understanding of common malicious behaviors (e.g., RDP scanning, SSH brute force)
 - Reverse engineering basics using tools like Detect It Easy, IDA Pro, x64dbg, Task Manager, and pestudio
 - Detecting and analyzing anti-debugging and VM-detection techniques
+- CyberChef decoding and credential hunting
+- Identifying Nmap scans, ARP spoofing, DNS tunneling, etc.
 - Windows API behavior analysis
 - Using base64 decoding, memory inspection, and entropy analysis for malware unpacking
-
 
 ---
 
