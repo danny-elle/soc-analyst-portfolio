@@ -8,6 +8,7 @@ from datetime import datetime
 # print(get_if_list())
 from scapy.all import sniff, IP, TCP, UDP, ICMP, ARP, Raw
 import re
+import argparse
 
 icmp_message = {
 
@@ -38,12 +39,19 @@ icmp_message = {
 
 }
 
+BOLD = "\033[1m"
+RESET = "\033[0m"
+
+suspicious_ports = [21, 22, 23, 25, 53, 80, 102, 161, 443, 445, 502, 3389, 8000, 8080, 8443, 20000, 44818]
+suspicious_ports.extend(range(135, 139))
+suspicious_ports.extend(range(1024, 4999))
+suspicious_ports.extend(range(49152, 65535))
+
 # TO-DOs:
 # TCP Flags
 # Flag suspicous ports
 # Save to log
 # Filter by port or protocol
-# Add DNS
 # Add suspicious payload sizes for HTTP traffic
 
 def packet_processor(pkts):
@@ -59,11 +67,10 @@ def packet_processor(pkts):
                     dst_port = pkt[TCP].dport
                     flags = pkt[TCP].flags
                     payload = pkt[Raw].load.decode(errors="ignore")
-                    print(f"[TCP] {timestamp} {src_ip}:{src_port} -> {dst_ip}:{dst_port} | Flags: {flags}")
+
+                    if src_port in suspicious_ports or dst_port in suspicious_ports:
+                        print(f"[TCP] {timestamp} {src_ip}:{src_port} -> {dst_ip}:{dst_port} | Flags: {flags}")
                     
-                    # Formatting output using bold for credentials found
-                    BOLD = "\033[1m"
-                    RESET = "\033[0m"
 
                     # HTTP Method extraction
                     if payload.startswith(("GET", "POST", "PUT", "DELETE")):
@@ -81,7 +88,10 @@ def packet_processor(pkts):
                     print("\n")
 
                 elif pkt.haslayer(UDP):
-                    print(f"[UDP] {timestamp} {src_ip}:{pkt[UDP].sport} -> {dst_ip}:{pkt[UDP].dport}")
+                    src_port = pkt[UDP].sport
+                    dst_port = pkt[UDP].dport
+                    if src_port in suspicious_ports or dst_port in suspicious_ports:
+                        print(f"[UDP] {timestamp} {src_ip}:{pkt[UDP].sport} -> {dst_ip}:{pkt[UDP].dport}")
                 
                 elif pkt.haslayer(ICMP):
                     icmp_type = pkt[ICMP].type
@@ -89,7 +99,7 @@ def packet_processor(pkts):
                     meaning = icmp_message.get((icmp_type, icmp_code), "Unknown ICMP Message")
                     print(f"[ICMP] {timestamp} {src_ip} -> {dst_ip} | Type: {icmp_type}, Code: {icmp_code}, Message: {meaning}")
 
-                elif pkt.haslayer("ARP"):
+                elif pkt.haslayer(ARP):
                       print(f"ARP: {timestamp} {pkt[ARP].psrc} -> {pkt[ARP].pdst}")
 
     except Exception as e:
@@ -106,4 +116,21 @@ def packet_processor(pkts):
 # sniff(prn=packet_processor, store=0)
 
 # Testing HTTP capture
-sniff(filter= "tcp port 8000", iface= "lo", prn=packet_processor, store=0)
+#sniff(filter= "tcp port 8000", iface= "lo", prn=packet_processor, store=0)
+
+def main():
+    parse = argparse.ArgumentParser(description="SOC packet sniffer")
+    parse.add_argument("-f", "--filter", help="BPF filer (Optional)", default="ip")
+    parse.add_argument("-i", "--interface", help="Network interface", default="lo")
+    parse.add_argument("-c", "--count", help="Number of packets", type=int, default=0)
+
+    args = parse.parse_args()
+
+    print(f"{BOLD}[Main] Starting packet capture on {args.interface}...{RESET}\n")
+    sniff(iface=args.interface, prn=packet_processor, filter=args.filter, store=0, count=args.count)
+
+if __name__ == "__main__":
+    main()
+
+
+
