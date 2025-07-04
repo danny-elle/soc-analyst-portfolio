@@ -52,6 +52,9 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 - HTB Blue Team labs
 - Splunk detection rules
-- CTFs (TryHackMe)
-- Malware analysis and reverse engineering
-- Python scripts for packet filtering, exporting logs, and alerting.
+- CTFs (TryHackMe)-Eviction, Wireshark, Splunk
+- Malware analysis and reverse engineering - malware analysis.net and Practical malware labs
+- Add DNS and log to network sniffer program
+- CrowdStrike Annual Threat Report
+- Security Playbook
+- Incident Report
