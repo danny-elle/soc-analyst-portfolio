@@ -6,10 +6,16 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 ##  Write-Ups
 
+### Learning  
 | Title | Description | Link |
 |-------|-------------|------|
 |  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
 |  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/anti-reverse-engineering.md) |
+
+### CTFs  
+| Title | Description | Link |
+|-------|-------------|------|
+|  Summit | Purple-team challenge simulating malware detection, alerting, and response across IOCs and TTPs | [View](writeups/CTFs/summit) |  
 
 ## SOC Scripts
 
