@@ -74,7 +74,7 @@ to malicious activity. PicoSecure's security toolset includes:
    - **Pyramid of Pain Level**: Host/Network Artifacts (Annoying)
    - **Actions Taken**: Developed a Sigma rule for Sysmon event logs to detect registry modifications by matching the specific registry key,
         name, and data, aligned with MITRE ATT&CK ID TA0005 - Defense Evasion.
-   - **Caveats / Analyst Insights**: Attackers can bypass this detection by using alternative registry paths, renaming tools, or employing living-off-the-
+   - **Caveats / Analyst Insights**: Attackers can bypass this detection by using alternate registry paths, renaming tools, or employing living-off-the-
         land techniques.
 
 
@@ -83,28 +83,44 @@ to malicious activity. PicoSecure's security toolset includes:
   - **Indicators Extracted**: outgoing_connections.log, source IP: 10.10.15.12 and destination IPs: 51.102.10.19, 43.10.65.115, size: 97 bytes, timestamps:
       2023-08-15 09:00:00, 2023-08-15 09:30:00
   - **Pyramid of Pain Level**: Tools (Challenging)
-  - **Actions Taken**: Developed a Sigma rule for System event logs to detect network connections from all IPs to all IPs of size 97 bytes
-      with a frequency of 1800s aligned with MITRE ATT&CK technique TA0011 - Command and Control (C2)
+  - **Actions Taken**: Developed a Sigma rule for System event logs to detect network connections from any source to any destination with packet sizes of 97 
+      bytes at 1800s intervals. Mapped to MITRE ATT&CK technique TA0011 - Command and Control (C2).
   - **Caveat / Analyst Insights**: Attackers are forced to adapt to the challenge of detecting and preventing their network tool. 
-       Attackers can evade network-based detections by using encrypted channels (HTTPS, DNS tunneling), switching to new C2 domains, or 
-       living-off-the land with built-in tools (curl, WMI, PowerShell).
+       Attackers may adapt by using encrypted channels (HTTPS, DNS tunneling), changing infastructure (C2 domains or IPs), or living-off-the land with built-in tools (curl, WMI, PowerShell)
+       to blend in with normal traffic.
+
+### sample6.exe
+   - **Initial Tool Used**: PicoSecure's Malware Analysis Sandbox 
+   - **Indicators Extracted**: commands.log, File Path: %temp%\exfiltr8.log
+   - **Pyramid of Pain Level**: Tactics, Techniques, and Procedures (Tough!)
+   - **Actions Taken**: Developed a Sigma rule for System event logs to detect file creation and modification
+       in the %TEMP% directory matching the file name exfiltr8.log, aligned with MITRE ATT&CK ID TA0010 - Exfiltration.
+   - **Caveat / Analyst Insights**: While TTP-level detection adds pressure on attackers, they can evade by altering file names, 
+       using different staging directories (%APPDATA%), using encryption, or exfiltrating directly from memory. 
 
 ---
 
 ## Flags
 
+  -**sample1.exe**:
+  -**sample2.exe**:
+  -**sample3.exe**:
+  -**sample4.exe**:
+  -**sample5.exe**:
+  -**sample6.exe**:
 
 ---
 
 ## Lessons Learned
 
-- **Blocking hashes are trivial because attackers can simply modify the file. It must be supplemented
-     with higher-fidelity indicators such as behavior, command-line arguments, or network activity.
-- **IP-based indicators are volatile and should be supplemented with more persistent indicators such as behavioral
-     signatures, and domain-based blocking.
-- **DNS-based indicators are useful but must be paired with deeper behavioral or host-based detections.
-- **Detecting Windows Defender registry key for Real-Time Protection is effective but should be paired with broader behavioral 
-    and telemetry-based detections, such as process monitoring and monitoring windows defender event logs.
-- **Network indicators alone are not sufficient and should be combined with host-based telemetry, behavioral patterns, and threat intelligence 
-    for robust detection.
+- **Hash-based blocking** is trivial to bypass; attackers can simply modify a single byte. It should be combined
+     with behavioral indicators such as command-line arguments or network activity.
+- **IP-based indicators** are volatile and easily evaded via proxies, dynamic IPs, or encrypted tunnels; they must be used alonside behavioral
+    and domain-based blocking.
+- **DNS-based indicators** are easily rotated and should be reinforced with host-based detections or network behavior analytics.
+- ** Registry-based detections** such as modifications to Windows Defender's DisableRealtimeMonitoring, are effective but should be supported by telemetry like process monitoring
+     and Windows Defender event logs. 
+- **Network tool detection** adds friciton for attackers, but can be bypassed using encryption, legitimate utilities, or new C2 infastructure.
+- **TTP-level detection** is powerful, but attackers may adapt through obfuscation, alternate data staging paths, or memory-only operations. Layered detection strategies including
+    behavioral analysis and exfiltration monitoring are essential.
 
