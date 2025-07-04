@@ -1,0 +1,110 @@
+# Summit CTF Writeup
+
+**Platform:**  TryHackMe
+**Category:**  CTF
+**Difficulty:**  Easy
+**Date Completed:**  2025-07-02
+
+
+---
+
+## Challenge Description
+
+I participated in a purple-team engagement, acting as a Defensive Analyst during a 
+simulated Metasploit attack conducted by an external penetration tester on a virtual
+internal user workstation. My responsiblity was to configure and fine-tune PicoSecure's 
+security tools to detect, alert on, and ultimately prevent malware executing. 
+
+---
+
+## Objective
+
+Following the Pyramid of Pain framework, I focused on detecting and blocingk increasingly
+sophisticated indicators of compromise (IOCs)- ranging from basic artifacts to advanced 
+tactics, techniques, and procedures (TTPs). The primary goal was to  increase the adversary's
+operational costs, forcing them to abandon their attack.
+
+---
+
+## Tools & Techniques
+
+During the challenge, I used PicoSecure's full defensive toolset to detect, analyze, and respond
+to malicious activity. PicoSecure's security toolset includes:
+
+* Malware Analysis Sandbox - for behavioral analysis of malware samples and dynmaic detection
+* Detect Hash Tool - to identify and flag known malicious files using has-based/digest detection (MD5, SHA1, SHA256)
+* Firewall Rules - to block network-based activity from a specific IP address
+* DNS Rules - to block network-based command-and-control activity from a specific domain address
+* Sigma Rules - for creating custom detection rules based on a variety of Windows Sysmon specific features
+* Mitre ATT&CK Mapping - to categorize and respond to attacker tactics, techniques, and procedures (TTPs)
+
+---
+
+## Step-by-Step Walkthrough
+
+### sample1.exe 
+   - **Initial Tool Used**: PicoSecure's Malware Analysis Sandbox  
+   - **Indicators Extracted**: MD5, SHA1, SHA256
+   - **Pyramid of Pain Level**: Hash (Trivial)
+   - **Actions Taken**: Hash Blocklist Tool
+   - **Caveats / Analyst Insights**: While can detect known malware quickly, they are weak indicators,
+       because even a minor modification to the file changes the hash completely. 
+  
+ ### sample2.exe
+    - **Initial Tool Used**: PicoSecure's Malware Analysis Sandbox
+    - **Indicators Extracted**: 154.33.10.113
+    - **Pyramid of Pain Level**: IP address (Easy)
+    - **Actions Taken**: Firewall rule created to deny all outgoing (egress) traffic to 154.33.10.113
+    - **Caveats / Analyst Insights**: Blocking IP addresses is a useful containment step, but attackers can 
+         easily evade it by using dynamic IPs, fast-flux infastructure, proxy servers, or VPNs. 
+
+ ### sample3.exe
+    - **Initial Tool Used**: PicoSecure's Malware Analysis Sandbox
+    - **Indicators Extracted**: emudyn.bresonicz.info
+    - **Pyramid of Pain Level**: Domain Names (Simple)
+    - **Actions Taken**: DNS rule created to deny emudyn.bresonicz.info and all its subdomains from the network
+    - **Caveats / Analyst Insights**: Blocking DNS domains can temporarily disrupt attacker infastructure, but it has limited
+        long-term effectiveness. Domains are easily rotated/regenerated using techniques like domain generation algorithms (DGAs).
+        Threats like Snatch ransomware, noted by CISA, have been observed switching domains rapidly to evade blocks.
+  
+### sample4.exe
+   - **Initial Tool Used**: PicoSecure's Malware Analysis Sandbox
+   - **Indicators Extracted**: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\Real-Time Protection,
+                               DisableRealtimeMonitoring, 1
+   - **Pyramid of Pain Level**: Host/Network Artifacts (Annoying)
+   - **Actions Taken**: Developed a Sigma rule for Sysmon event logs to detect registry modifications by matching the specific registry key,
+        name, and data, aligned with MITRE ATT&CK ID TA0005 - Defense Evasion.
+   - **Caveats / Analyst Insights**: Attackers can bypass this detection by using alternative registry paths, renaming tools, or employing living-off-the-
+        land techniques.
+
+
+### sample5.exe
+  - **Initial Tool Used**: PicoSecure's Malware Analysis Sandbox 
+  - **Indicators Extracted**: outgoing_connections.log, source IP: 10.10.15.12 and destination IPs: 51.102.10.19, 43.10.65.115, size: 97 bytes, timestamps:
+      2023-08-15 09:00:00, 2023-08-15 09:30:00
+  - **Pyramid of Pain Level**: Tools (Challenging)
+  - **Actions Taken**: Developed a Sigma rule for System event logs to detect network connections from all IPs to all IPs of size 97 bytes
+      with a frequency of 1800s aligned with MITRE ATT&CK technique TA0011 - Command and Control (C2)
+  - **Caveat / Analyst Insights**: Attackers are forced to adapt to the challenge of detecting and preventing their network tool. 
+       Attackers can evade network-based detections by using encrypted channels (HTTPS, DNS tunneling), switching to new C2 domains, or 
+       living-off-the land with built-in tools (curl, WMI, PowerShell).
+
+---
+
+## Flags
+
+
+---
+
+## Lessons Learned
+
+- **Blocking hashes are trivial because attackers can simply modify the file. It must be supplemented
+     with higher-fidelity indicators such as behavior, command-line arguments, or network activity.
+- **IP-based indicators are volatile and should be supplemented with more persistent indicators such as behavioral
+     signatures, and domain-based blocking.
+- **DNS-based indicators are useful but must be paired with deeper behavioral or host-based detections.
+- **Detecting Windows Defender registry key for Real-Time Protection is effective but should be paired with broader behavioral 
+    and telemetry-based detections, such as process monitoring and monitoring windows defender event logs.
+- **Network indicators alone are not sufficient and should be combined with host-based telemetry, behavioral patterns, and threat intelligence 
+    for robust detection.
+
