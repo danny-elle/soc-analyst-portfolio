@@ -85,3 +85,11 @@ Utilize OpenCTI and Mitre Att&ck Navigator to identify the tactics, techniquesm 
         **Answer: Automated Collection**
 
 
+
+
+---
+
+## Lessoned Learned
+
+
+ 
