@@ -1,4 +1,4 @@
-````markdown
+
 # SNORT CHALLENGE - The Basics
 
 ## Tools Used
