@@ -23,7 +23,7 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 | Title | Description | Link |
 |-------|-------------|------|
-|  Python Network Sniffer   | A Scapy network packet sniffer that displays source/destination IPs, TCP ports, and TCP flags. Built to simulate real-time traffic inspection in SOC setting | [View](network_sniffer.py)  |
+|  Python Network Sniffer   | A Scapy network packet sniffer that displays source/destination IPs, TCP ports, and TCP flags. Built to simulate real-time traffic inspection in SOC setting | [View](soc_scripts/network_sniffer.py)  |
 | Python IOC IPs |  Detects and logs IP addresses involved in threats. Categorizes them by severity and threat type. | [View](soc_scripts/ioc_ips.py) |
 | Python Suspicious Ports | Detects and alerts which ports are used for malicious activity. | [View](soc_scripts/suspicious_ports.py) |
 | Python Time-based Threat Detection | Checks alerts for any activity within the past hour. | [View](soc_scripts/timebased_detection.py) |
