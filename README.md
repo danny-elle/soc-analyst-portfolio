@@ -9,24 +9,26 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 ### Learning  
 | Title | Description | Link |
 |-------|-------------|------|
-|  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/learning/wireshark-analysis.md) |
+|  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/learning/wireshark-traffic-analysis.md) |
 |  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/learning/anti-reverse-engineering.md) |
 
 ### CTFs  
 | Title | Description | Link |
 |-------|-------------|------|
-|  Summit | Purple-team challenge simulating malware detection, alerting, and response across IOCs and TTPs | [View](writeups/CTFs/summit) |  
-|  Snort1ch | Investigate a series of traffic captures and identify malicious activity across multiple scenarios. | [View](writeups/CTFs/snort1ch) |
+|  Summit | Purple-team challenge simulating malware detection, alerting, and response across IOCs and TTPs | [View](writeups/CTFs/Summit) |  
+|  Snort1ch | Investigate a series of traffic captures and identify malicious activity across multiple scenarios. | [View](writeups/CTFs/snort1ch.md) |
 | Trooper | CTI Analyst tasked with identifying a threat group's TTPs, identity, and motive using OpenCTI and MITRE ATT&CK Navigator. | [View](writeups/CTFs/trooper.md) |
 
 ## SOC Scripts
 
 | Title | Description | Link |
 |-------|-------------|------|
-|  Python Network Sniffer   | A Scapy network packet sniffer that displays source/destination IPs, TCP ports, and TCP flags. Built to simulate real-time traffic inspection in SOC setting | [View](network-sniffer/simple_sniffer.py)  |
+|  Python Network Sniffer   | A Scapy network packet sniffer that displays source/destination IPs, TCP ports, and TCP flags. Built to simulate real-time traffic inspection in SOC setting | [View](network_sniffer.py)  |
 | Python IOC IPs |  Detects and logs IP addresses involved in threats. Categorizes them by severity and threat type. | [View](soc_scripts/ioc_ips.py) |
 | Python Suspicious Ports | Detects and alerts which ports are used for malicious activity. | [View](soc_scripts/suspicious_ports.py) |
 | Python Time-based Threat Detection | Checks alerts for any activity within the past hour. | [View](soc_scripts/timebased_detection.py) |
+
+
 
 
 ---
