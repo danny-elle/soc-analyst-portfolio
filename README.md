@@ -9,13 +9,15 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 ### Learning  
 | Title | Description | Link |
 |-------|-------------|------|
-|  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/wireshark-analysis.md) |
-|  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/anti-reverse-engineering.md) |
+|  Wireshark Traffic Analysis | Analysis of anomalies and protocol behavior using Wireshark | [View](writeups/learning/wireshark-analysis.md) |
+|  Anti-Reverse Engineering  | Techniques malware uses to evade analysis and how to detect/analyze them   |[View](writeups/learning/anti-reverse-engineering.md) |
 
 ### CTFs  
 | Title | Description | Link |
 |-------|-------------|------|
 |  Summit | Purple-team challenge simulating malware detection, alerting, and response across IOCs and TTPs | [View](writeups/CTFs/summit) |  
+|  Snort1ch | Investigate a series of traffic captures and identify malicious activity across multiple scenarios. | [View](writeups/CTFs/snort1ch) |
+| Trooper | CTI Analyst tasked with identifying a threat group's TTPs, identity, and motive using OpenCTI and MITRE ATT&CK Navigator. | [View](writeups/CTFs/trooper.md) |
 
 ## SOC Scripts
 
@@ -50,9 +52,7 @@ Welcome to my SOC Analyst portfolio. This repository showcases hands-on blue tea
 
 ##  Future Additions
 
-- HTB Blue Team labs
 - Splunk detection rules
-- CTFs (TryHackMe)-Eviction, Wireshark, Splunk
 - Malware analysis and reverse engineering - malware analysis.net and Practical malware labs
 - Add DNS and log to network sniffer program
 - CrowdStrike Annual Threat Report
