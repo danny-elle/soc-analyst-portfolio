@@ -39,6 +39,7 @@ Installed Wazuh SIEM enviroment on Ubuntu to support centralized logging, alert 
 ``` 
 
 All services are running:
+
 [Installation Success](../screenshots/wazuh-indexer-active.png)
 
 ## Dashboard Access
