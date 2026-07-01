@@ -36,6 +36,7 @@ Installed Wazuh SIEM enviroment on Ubuntu to support centralized logging, alert 
   sudo systemctl status wazuh-manager
   sudo systemctl status wazuh-indexer
   sudo systemctl status wazuh-dashboard
+``` 
 
 screenshots 
 
@@ -43,6 +44,7 @@ screenshots
 - Retrieve system IP address:
   ```bash
   ip a
+  ``` 
 - Accessed server broswer via:
   https://<server-ip>
 - Logged in using generated admin credentials
