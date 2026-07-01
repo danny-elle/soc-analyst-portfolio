@@ -48,7 +48,7 @@ All services are running:
   ip a
   ``` 
 - Accessed server broswer via:
-  https://<server-ip>
+  https://10.0.2.15
 - Logged in using generated admin credentials
 - Successfully reach Wazuh dashboard web interface
   [Login page](../screenshots/wazuh-website-loginpage.png)
