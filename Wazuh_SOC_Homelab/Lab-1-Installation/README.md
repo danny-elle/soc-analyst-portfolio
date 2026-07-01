@@ -51,7 +51,9 @@ All services are running:
   https://<server-ip>
 - Logged in using generated admin credentials
 - Successfully reach Wazuh dashboard web interface
-<screenshot>
+  [Login page](../screenshots/wazuh-website-loginpage.png)
+
+  [Wazuh Dashboard](../screenshots/wazuh-successfully-logged-in.png)
 
 ## Observations
 - Wazuh provides centralized visibility into system and security events
