@@ -38,7 +38,8 @@ Installed Wazuh SIEM enviroment on Ubuntu to support centralized logging, alert 
   sudo systemctl status wazuh-dashboard
 ``` 
 
-screenshots 
+All services are running:
+![Installation Success](.../screenshots/wazuh-indexer-active.png)
 
 ## Dashboard Access
 - Retrieve system IP address:
