@@ -65,6 +65,7 @@ Verify Ports:
   - In Wazuh Dashboard:
     Management > Endpoints
   - Status changed from never connected to Active
+  [Wazuh Dashboard Agent Status](../screenshots/wazuh-dashboard-active.png)
  
 ## Lessons Learned
 - Host-only networking simpliest for VM labs
