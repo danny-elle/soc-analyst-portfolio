@@ -66,7 +66,7 @@ Verify Ports:
     Management > Endpoints
   - Status changed from never connected to Active
     
-  [Wazuh Dashboard Agent Status]
+  [Wazuh Dashboard Agent Status](../screenshots/wazuh-agent-windows-active.png)
  
 ## Lessons Learned
 - Host-only networking simpliest for VM labs
