@@ -65,6 +65,7 @@ Verify Ports:
   - In Wazuh Dashboard:
     Management > Endpoints
   - Status changed from never connected to Active
+    
   [Wazuh Dashboard Agent Status](../screenshots/wazuh-agent-windows-active.png)
  
 ## Lessons Learned
