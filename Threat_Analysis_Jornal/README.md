@@ -3,7 +3,7 @@
 ## Overview
 This journal analyze reports on recent cybersecurity attacks and vulnerabilities from public threat intelligence reports and cybersecurity news. 
 By analyzing these current reports, I apply a Security Operations Center (SOC) analyst's methodology to detect, investigate, and respond to security incidents. 
-Each report focuses on the attack's tactics, technigques, and procedures (TTPs), potential detection oppurtunities, relevant log sources, and lessons learned from a defender's perspective.
+Each report focuses on the attack's tactics, techniques, and procedures (TTPs), potential detection oppurtunities, relevant log sources, and lessons learned from a defender's perspective.
 The goal is to understand strengthen my analytical thinking and develop practical skills that reflect the day-to-day operations of an SOC analyst.
 
 ## Objectives
