@@ -51,9 +51,10 @@ Authentication testing was performed through Windows SMB services.
 
 The following Windows Security Event IDs were observed:
 
- Event ID : Description 
- 4624 : Successful Logon 
- 4625 : Failed Logon 
+ | Event ID | Description |
+ |---|---|
+ | 4624 | Successful Logon |
+ | 4625 | Failed Logon |
 
 Events were successfully ingested by Wazuh and were searchable through the dashboard.
 
@@ -174,13 +175,14 @@ Dashboard session refreshed successfully.
 
 ## Findings
 
- Finding : Status 
- Windows agent reporting : Confirmed 
- Authentication events collected : Confirmed 
- Failed logons detected : Confirmed 
- Successful logons detected : Confirmed 
- Wazuh indexing operational : Confirmed 
- Source IP visibility : Limited 
+ | Finding | Status |
+ |---|---|
+ | Windows agent reporting | Confirmed |
+ | Authentication events collected | Confirmed |
+ | Failed logons detected | Confirmed |
+ | Successful logons detected | Confirmed |
+ | Wazuh indexing operational | Confirmed |
+ | Source IP visibility | Limited |
 
 ---
 
