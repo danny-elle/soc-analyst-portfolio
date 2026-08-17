@@ -1,9 +1,9 @@
 # Lab 2 - Wazuh Agent Deployment
 
 ## Overview
-Deploying and register Wazuh agent on Windows system and succesfully connect it to a Wazuh server running on Ubuntu. Verify communication and ensure agent appears as active on Wazuh.
+Deploying and registering Wazuh agent on Windows system and successfully connect it to a Wazuh server running on Ubuntu. Verify communication and ensure agent appears as active on Wazuh.
 
-## Enviroment
+## Environment
 - Wazuh server: Ubuntu 22.04 LTS Desktop (All-in-one Wazuh 4.7)
 - Windows agent: Windows 11
 - Virtualization: VirtualBox
@@ -11,7 +11,7 @@ Deploying and register Wazuh agent on Windows system and succesfully connect it 
 - Server IP: 192.168.56.x
 - Windows IP: 192.168.56.x
 
-## Step 1 Network Configuration
+## Step 1: Network Configuration
 Initial Issue
 - Both VMs configured to SOC NAT NETWORK
 - Windows could not ping Ubuntu
@@ -38,9 +38,9 @@ Connectivity Test
 - Windows:
   ``` ping 192.168.56.x ```
 
-## Step 2 Download Wazuh Agent
+## Step 2: Download Wazuh Agent
 On Windows 11 VM (PowerShell as Admin):
-```Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.5-1.msi -OutFile ${env.tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.56.x' WAZUH_REGISTRATION_SERVER='192.68.56.x' ```
+```Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.5-1.msi -OutFile ${env:tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.56.x' WAZUH_REGISTRATION_SERVER='192.68.56.x' ```
 
 Issue:
 - No service
@@ -51,7 +51,7 @@ Issue:
 Solution:
 - updated .conf manager IP address and registration address to current Ubuntu Host Only IPs
 - Restarted service:
-  ``` Restart-Service wazuh ```
+  ``` Restart-Service wazuhsvc ```
 
 Verify Ports:
 - On Windows:
@@ -60,7 +60,7 @@ Verify Ports:
 - Output:
   TcpTestSucceeded : true
 
-## Step 3 Verify Agent on Dashboard
+## Step 3: Verify Agent on Dashboard
 - On Ubuntu:
   - In Wazuh Dashboard:
     Management > Endpoints
@@ -69,7 +69,7 @@ Verify Ports:
   [Wazuh Dashboard Agent Status](../screenshots/wazuh-agent-windows-active.png)
  
 ## Lessons Learned
-- Host-only networking simpliest for VM labs
+- Host-only networking simplest for VM labs
 - NAT alone cannot support internal VM connection (both Windows and Ubuntu IPs were the same 10.0.2.x)
 - Wazuh requires:
     - Port 1515 for enrollment
@@ -79,10 +79,10 @@ Verify Ports:
 
 ## Conclusion
 The deployment of Wazuh Windows agent was successfully completed after resolving networking and installation issues. The agent is fully
-operational and actively communicating with the Wazuh server in a virtual SOC enviroment.
+operational and actively communicating with the Wazuh server in a virtual SOC environment.
 
 ## Next steps
-- Add screenshots of Agent deployment setup
+- Add screenshots of endpoint agent deployment setup
 - Lab 3 brute force 
 
   
