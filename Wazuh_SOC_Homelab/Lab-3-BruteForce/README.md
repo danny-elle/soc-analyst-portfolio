@@ -6,10 +6,11 @@ This lab focused on generating Windows authentication events and validating that
 
 ## Lab Environment
 
- System - Purpose:
- Kali Linux - Attack Workstation 
- Windows 11 Home - Target System 
- Ubuntu Server - Wazuh SIEM 
+ | System | Purpose |
+ |---|---|
+ | Kali Linux | Attack Workstation |
+ | Windows 11 Home | Target System |
+ | Ubuntu Server |  Wazuh SIEM |
 
 ---
 
@@ -185,7 +186,7 @@ Example:
 123456
 password
 Password123
-bigbooty12!
+qwerty123
 ```
 
 ---
