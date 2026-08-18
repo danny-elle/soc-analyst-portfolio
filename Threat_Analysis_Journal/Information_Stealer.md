@@ -2,11 +2,11 @@
 
 ## Executive Summary
 
-Kaspersky researchers disclosed a previously undocumented advanced persistent threat actor named Armored Likho, running an active cyberespionage and financially motivated credential theft campaign against government agencies and electric power operators in Russia, Kazakhstan, and Brazil. The group delivers a Python infostealer named BusySnake Stealer via spearphishing emails containing NSIS-based executable droppers or malicious LNK files, exploiting the patched Windows shortcut vulnerability CVE-2025-9491. BusySnake is built to resist detection and reverse engineering by using commercial obfuscation tooling and anti-analysis techniques. It gives the attackers persistent, interactive access to compromised systems through reverse SSH tunnels, deployable remote-access software, and a dedicated command-and-control channel. This report examines the attack chain, the stealer's capabilities, and the detection opportunities it presents for defenders.
+Kaspersky researchers disclosed a previously undocumented advanced persistent threat actor named Armored Likho, running an active cyberespionage and financially motivated credential theft campaign against government agencies and electric power operators in Russia, Kazakhstan, and Brazil. The group delivers a Python infostealer named BusySnake Stealer via spearphishing emails containing NSIS-based executable droppers or malicious LNK files, exploiting the patched Windows shortcut vulnerability CVE-2025-9491/ZDI-CAN-25373. BusySnake is built to resist detection and reverse engineering by using commercial obfuscation tooling and anti-analysis techniques. It gives the attackers persistent, interactive access to compromised systems through reverse SSH tunnels, deployable remote-access software, and a dedicated command-and-control channel. This report examines the attack chain, the stealer's capabilities, and the detection opportunities it presents for defenders.
 
 ## Threat Overview
 
-Armored Likho gains initial access through spearphishing emails carrying either NSIS-based executable droppers or malicious Windows shortcut (LNK) files. This technique exploits a patched vulnerability in how Windows handles shortcut files, identified as CVE-2025-9491. Once executed, the infection chain deploys the campaign's primary paylod: BusySnake Stealer. It's a previously undocumented Python-based infostealer capable of harvesting browser-stored passwords and cookies, clipboard content, cyrptographic keys, messaging, and authentication data. It's also known to harvest Telegram session information from compromised hosts. The malware can establish reverse SSH tunnels or deploy remote-access software to give the attackers persistent interactive access. Furthermore, the malware supports command-and-control channel for issuing further commands. Armored Likho's broader toolkit includes Go2Tunnel tool used for remote access and network tunneling.
+Armored Likho gains initial access through spearphishing emails carrying either NSIS-based executable droppers or malicious Windows shortcut (LNK) files. This technique exploits a patched vulnerability in how Windows handles shortcut files, identified as CVE-2025-9491/ZDI-CAN-25373. Once executed, the infection chain deploys the campaign's primary payload: BusySnake Stealer. It's a previously undocumented Python-based infostealer capable of harvesting browser-stored passwords and cookies, clipboard content, cryptographic keys, messaging, and authentication data. It's also known to harvest Telegram session information from compromised hosts. The malware can establish reverse SSH tunnels or deploy remote-access software to give the attackers persistent interactive access. Furthermore, the malware supports command-and-control channel for issuing further commands. Armored Likho's broader toolkit includes Go2Tunnel tool used for remote access and network tunneling.
 
 BusySnake employs several techniques making detection and reverse engineering difficult. Its code is obfuscated and encrypted using PyArmor Pro version 9.2.0; the malware decrypts its own bytecode only at the moment a function is called, then immediately re-encrypts it limiting the window in which the code is exposed to static analysis. It also runs in the background without opening a visible console window and uses a lock file mechanism to prevent multiple instances from running simultaneously on the same host. Analysts examining the loader components noted coding patterns and comments consistent with LLM assisted development. Utilizing LLM deployments is an emerging trend worth tracking as threat actors incorporate AI tooling into malware development.
 
@@ -16,21 +16,24 @@ BusySnake employs several techniques making detection and reverse engineering di
 | Tactic | Technique | ID |
 |---|---|---|
 | Initial Access | Phishing: Spearphishing Attachment | T1566.001 |
+| Execution | Exploitation for Client Execution (ZDI-CAN-25373) | T1203 |
 | Execution | User Execution: Malicious File | T1204.002 |
 | Execution | Command and Scripting Interpreter: PowerShell | T1059.001 |
 | Execution | Command and Scripting Interpreter: Visual Basic | T1059.005 |
 | Persistence | Scheduled Task/Job: Scheduled Task | T1053.005 |
 | Defense Evasion | Obfuscated Files or Information: Software Packing | T1027.002 |
 | Defense Evasion | Indicator Removal: File Deletion | T1070.004 |
-| Credential Access | Credentials from Password Stores: Credential from Web Browswers | T1027.003 |
+| Credential Access | Credentials from Password Stores: Credential from Web Browsers | T1555.003 |
 | Credential Access | Steal Web Session Cookie | T1539 |
 | Collection | Clipboard Data | T1115 |
 | Collection | Screen Capture | T1113 |
 | Collection | Data from Local System | T1005 |
 | Command and Control | Application Layer Protocol | T1071 |
+| Command and Control | Ingress Tool Transfer (Python, pip, RustDesk from GitHub) | T1105 |
 | Command and Control | Protocol Tunneling (reverse SSH tunnel) | T1572 |
 | Command and Control | Remote Access Software | T1219 |
 | Exfiltration | Exfiltration Over C2 Channel | T1041 |
+
 
 
 ## Indicators of Compromise (IOCs)
@@ -41,7 +44,7 @@ The following indicators are sourced from Kaspersky's Securelist disclosure (Jul
 
 | Hash | Type |
 |---|---|
-|  5D5C3E483C5E544260CE98FC29FBF192 | PS1 stager |
+| 5D5C3E483C5E544260CE98FC29FBF192 | PS1 stager |
 | 7141917CBA2EEE2B4D31107FACCF3A39 | EXE stager |
 | F5C6434EE5F7578FAA3BC1257E1C9226 | EXE stager |
 | C019797A00FD56EDB1F468AC0A598510 | BAT stager |
@@ -81,7 +84,7 @@ The following indicators are sourced from Kaspersky's Securelist disclosure (Jul
 - 159.198.32[.]222
 - 69.67.173[.]153
 
-## Detection Oppurtunities
+## Detection Opportunities
 
 ### Initial Access and Execution
 
@@ -132,7 +135,7 @@ The following indicators are sourced from Kaspersky's Securelist disclosure (Jul
 
 - Email gateway/security logs (attachment delivery, sender reputation, archive file scanning)
 - Windows Security Event Logs (Event ID 4688 - process creation, Event ID 4698 - scheduled task creation)
-- Sysmon logs (Event ID 1 - process creation, Evernt ID 3 - network connection, Event ID 11 - file creation, Event ID 7 - module loads)
+- Sysmon logs (Event ID 1 - process creation, Event ID 3 - network connection, Event ID 11 - file creation, Event ID 7 - module loads)
 - PowerShell script block logging (captures downloaded and executed payloads)
 - Task Scheduler operational logs (Windows-TaskScheduler/Operational - captures scheduled task registration via both schtasks and COM objects)
 - Browser extension audit logs (Chrome extension installs from non-web-store sources)
@@ -216,5 +219,5 @@ The following indicators are sourced from Kaspersky's Securelist disclosure (Jul
 
 
 ## References
-- - Vijayan, Jai. "'BusySnake' Infostealer Slithers Into Critical Infrastructure Networks." *Dark Reading*, July 6, 2026. https://www.darkreading.com/cyberattacks-data-breaches/busysnake-infostealer-critical-infrastructure-networks
+- Vijayan, Jai. "'BusySnake' Infostealer Slithers Into Critical Infrastructure Networks." *Dark Reading*, July 6, 2026. https://www.darkreading.com/cyberattacks-data-breaches/busysnake-infostealer-critical-infrastructure-networks
 - Kaspersky. "Armored Likho digging a snake pit: inside the covert BusySnake Stealer campaign." *Securelist*, July 3, 2026. https://securelist.com/tr/armored-likho-apt-with-busysnake-stealer/120292/
